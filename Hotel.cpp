@@ -80,8 +80,10 @@ int main() {
         menu:
         cout << "\n\nPusat Pemesanan Hotel" << endl;
         cout << "Selamat datang, user." << endl;
-        cout << "1. Pesan kamar" << endl;
-        cout << "2. Pembayaran" << endl;
+        cout << "1. Pesan Kamar" << endl;
+        cout << "2. Edit Pesanan (Jumlah dan Tanggal menginap)" << endl;
+        cout << "3. Batalkan Pesanan" << endl;
+        cout << "4. Pembayaran" << endl;
         cout << "Masukkan pilihan: ";
         cin >> choice;
 
@@ -154,6 +156,58 @@ int main() {
                 break;
             }
             case 2: {
+                // Ubah Tanggal Menginap
+                string Lokasi;
+                if (locationChoice == 1) {
+                    Lokasi = "Jakarta";
+                } else if (locationChoice == 2) {
+                    Lokasi = "Bali";
+                }
+                cout << "\nPilih pesanan yang ingin Anda edit: " << endl;
+                for (size_t i = 0; i < cart.size(); ++i) {
+                    cout << "Pesanan " << i + 1 << ": " << "Tipe Kamar: "<< cart[i].first.nama << ", Lokasi: " << Lokasi <<", Jumlah: " << cart[i].second << ", Tanggal Masuk: " << tgl << endl;
+                }
+                int pesananUbah;
+                cout << "Masukkan nomor pesanan yang ingin Anda ubah: ";
+                cin >> pesananUbah;
+
+                int jumlahBaru;
+                cout << "Masukkan jumlah kamar baru untuk pesanan ini: ";
+                cin >> jumlahBaru;
+                cart[pesananUbah - 1].second = jumlahBaru;
+                cout << "Jumlah kamar untuk pesanan " << pesananUbah << " telah diubah menjadi " << jumlahBaru << endl;
+
+                cout << "Masukkan tanggal baru untuk pesanan ini: ";
+                cin >> tgl;
+                cout << "Tanggal menginap untuk pesanan " << pesananUbah << " telah diubah menjadi tanggal " << tgl << endl;
+                goto menu;
+            }
+            case 3: {
+                // Batalkan Pesanan
+                string Lokasi;
+                if (locationChoice == 1) {
+                    Lokasi = "Jakarta";
+                } else if (locationChoice == 2) {
+                    Lokasi = "Bali";
+                }
+                cout << "\nPilih pesanan yang ingin Anda batalkan: " << endl;
+                for (size_t i = 0; i < cart.size(); ++i) {
+                    cout << "Pesanan " << i + 1 << ": " << "Tipe Kamar: "<< cart[i].first.nama << ", Lokasi: " << Lokasi <<", Jumlah: " << cart[i].second << ", Tanggal Masuk: " << tgl << endl;
+                }
+                int pesananBatal;
+                cout << "Masukkan nomor pesanan yang ingin Anda batalkan: ";
+                cin >> pesananBatal;
+    
+                // Hapus pesanan dari keranjang
+                if (pesananBatal >= 1 && pesananBatal <= cart.size()) {
+                    cart.erase(cart.begin() + pesananBatal - 1);
+                    cout << "Pesanan berhasil dibatalkan." << endl;
+                } else {
+                    cout << "Nomor pesanan tidak valid." << endl;
+                }
+                goto menu;
+            }
+            case 4: {
                  // Menampilkan pesanan yang ada dalam keranjang
                 string Lokasi;
                 if (locationChoice == 1) {
@@ -161,7 +215,6 @@ int main() {
                 } else if (locationChoice == 2) {
                     Lokasi = "Bali";
                 }
-
                 int totalHarga = 0; // Variabel untuk menyimpan total harga pesanan
                 cout << "Pesanan Anda:" << endl;
                 for (size_t i = 0; i < cart.size(); ++i) {
